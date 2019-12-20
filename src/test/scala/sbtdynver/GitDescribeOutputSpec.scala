@@ -12,6 +12,9 @@ object GitDescribeOutputSpec extends Properties("GitDescribeOutputSpec") {
   test("1234abcd+20140707-1030",          "1234abcd", 0, "",         "+20140707-1030")
   test("HEAD+20140707-1030",              "HEAD",     0, "",         "+20140707-1030")
 
+  // Dave G failing test:
+  test("1.1.1+2-513a0e62+20191220-0949",  "1.1.1",    2, "513a0e62", "+20191220-0949")
+
   def test(v: String, ref: String, dist: Int, sha: String, dirtySuffix: String) = {
     val out = GitDescribeOutput(GitRef(ref), GitCommitSuffix(dist, sha), GitDirtySuffix(dirtySuffix))
     property(s"parses $v") = DynVer.parser.parse(v) ?= out
